@@ -1,0 +1,55 @@
+.wrapper {
+  width: 100%;
+  height: 100%;
+  position: relative;
+  text-align: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: visible; /* changed */
+  perspective: 1200px; /* better depth */
+}
+
+.inner {
+  --w: 180px;
+  --h: 240px;
+  --translateZ: calc(var(--w)* 1.5); /* moved outward */
+  --rotateX: -10deg;
+  --perspective: 1200px;
+  position: relative;
+  width: var(--w);
+  height: var(--h);
+  transform-style: preserve-3d;
+  transform: perspective(var(--perspective));
+}
+
+.card {
+  position: absolute;
+  width: var(--w);
+  height: var(--h);
+  transform: rotateY(calc((360deg / var(--quantity)) * var(--index)))
+    translateZ(var(--translateZ));
+  transform-origin: center;
+  border-radius: 12px;
+  overflow: hidden;
+  background-color: #0f172a;
+  color: white;
+  transition: transform 0.3s ease;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.25);
+}
+
+.card:hover {
+  transform: rotateY(calc((360deg / var(--quantity)) * var(--index)))
+    translateZ(var(--translateZ)) scale(1.08);
+  z-index: 2;
+}
+
+.card-overlay {
+  width: 100%;
+  height: 100%;
+  padding: 0.5rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  text-align: center;
+}

@@ -2,6 +2,7 @@
 
 import React from 'react';
 import { SocialIcon } from 'react-social-icons';
+import { motion } from 'framer-motion';
 
 export default function FloatingSocialIcons() {
   const socialLinks = [
@@ -12,7 +13,12 @@ export default function FloatingSocialIcons() {
   ];
 
   return (
-    <div className="fixed top-1/2 left-0 -translate-y-1/2 z-50 space-y-2">
+    <motion.div
+      initial={{ opacity: 0, x: -20 }}
+      animate={{ opacity: 1, x: 0 }}
+      transition={{ duration: 1, ease: 'easeOut' }}
+      className="fixed top-1/2 left-0 -translate-y-1/2 z-50 space-y-2"
+    >
       {socialLinks.map((url, i) => (
         <div
           key={i}
@@ -32,6 +38,6 @@ export default function FloatingSocialIcons() {
           </div>
         </div>
       ))}
-    </div>
+    </motion.div>
   );
 }

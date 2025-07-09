@@ -3,43 +3,35 @@
 import { useEffect, useRef } from 'react';
 import gsap from 'gsap';
 import { MotionPathPlugin } from 'gsap/MotionPathPlugin';
+import { motion } from 'framer-motion';
 
 gsap.registerPlugin(MotionPathPlugin);
 
 export default function HeroSVG() {
   const pathRef = useRef<SVGPathElement>(null);
   const starRef = useRef<SVGPolygonElement>(null);
-  const headingRef = useRef<HTMLHeadingElement>(null);
   const subtitleRef = useRef<HTMLParagraphElement>(null);
   const featuresRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     const path = pathRef.current;
     const star = starRef.current;
-    const heading = headingRef.current;
     const subtitle = subtitleRef.current;
     const features = featuresRef.current;
 
-    if (!path || !star || !heading || !subtitle || !features) return;
+    if (!path || !star || !subtitle || !features) return;
 
     const length = path.getTotalLength();
 
     // Initial styles
     gsap.set([path, star, subtitle, features], { opacity: 0 });
-    gsap.set(heading, { opacity: 0, y: 10 });
     gsap.set(path, {
       strokeDasharray: length,
       strokeDashoffset: length
     });
 
-    // GSAP Timeline
+    // GSAP Timeline (no heading animation here)
     const tl = gsap.timeline({ defaults: { ease: 'power2.out' } });
-
-    tl.to(heading, {
-      opacity: 1,
-      y: 0,
-      duration: 1.8
-    });
 
     tl.to(path, {
       strokeDashoffset: 0,
@@ -69,7 +61,6 @@ export default function HeroSVG() {
       duration: 0.8
     }, "-=0.2");
 
-    // Features section animation
     tl.to(features, {
       opacity: 1,
       y: 0,
@@ -85,16 +76,21 @@ export default function HeroSVG() {
     <div className="min-h-screen flex flex-col bg-white">
       {/* Main Hero Section */}
       <section className="flex-1 flex flex-col items-center justify-center px-4 py-6 text-center gap-0">
-        {/* Heading */}
-        <h1
-          ref={headingRef}
-          className="text-4xl md:text-5xl font-extrabold text-gray-900 mb-[-6px]"
+        {/* Heading with Framer Motion */}
+        <motion.h1
+          initial={{ opacity: 0, y: 10 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 1.2, ease: 'easeOut' }}
+          className="text-6xl md:text-7xl font-extrabold text-gray-900 mb-[-6px]"
         >
           Mighty <span className="text-transparent bg-clip-text bg-gradient-to-r from-green-500 to-orange-400">Five</span> Agency
-        </h1>
+        </motion.h1>
 
-        {/* SVG with path + star */}
-        <svg
+        {/* SVG with path + star, animated with GSAP only (no Framer motion) */}
+        <motion.svg
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ delay: 0.6, duration: 1 }}
           width="90%"
           height="200"
           viewBox="0 0 800 200"
@@ -122,7 +118,7 @@ export default function HeroSVG() {
             fill="#fbbf24"
             transform="translate(50,120)"
           />
-        </svg>
+        </motion.svg>
 
         {/* Subtitle */}
         <p

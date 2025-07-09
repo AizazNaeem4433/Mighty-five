@@ -22,6 +22,7 @@ export const services: Service[] = [
   {
     slug: 'mobile-applications',
     title: 'Mobile Applications Development',
+    
     intro:
       'We create powerful, user-friendly mobile applications that help businesses engage with their customers effectively across all mobile platforms.',
     bannerUrl: '/images/App-dev/appdeveloper banner.svg',

@@ -3,34 +3,25 @@
 import React from 'react';
 import Image from 'next/image';
 import { SocialIcon } from 'react-social-icons';
-
-const services = [
-  'Mobile Applications',
-  'Web Development',
-  'ERP Solution Development',
-  'Financial Solutions',
-  'Digital Marketing',
-  'Open AI',
-  'Custom Software Development',
-];
+import { services } from '@/app/lib/data/services';
+import Link from 'next/link';
 
 export default function Footer() {
   return (
     <footer className="bg-black text-white mt-10">
       {/* Scrolling Banner */}
       <div className="w-full overflow-hidden bg-red-100 py-3 border-t border-b border-red-300">
-  <div className="flex animate-marquee whitespace-nowrap">
-    {Array(2)
-      .fill(services)
-      .flat()
-      .map((s, i) => (
-        <span key={i} className="px-4 text-sm font-semibold text-black">
-          🔴 {s}
-        </span>
-      ))}
-  </div>
-</div>
-
+        <div className="flex animate-marquee whitespace-nowrap">
+          {Array(2)
+            .fill(services)
+            .flat()
+            .map((s, i) => (
+              <span key={i} className="px-4 text-sm font-semibold text-black">
+                🔴 {s.title}
+              </span>
+            ))}
+        </div>
+      </div>
 
       {/* Main Footer */}
       <div className="max-w-7xl mx-auto px-6 py-16 grid md:grid-cols-4 gap-10">
@@ -45,10 +36,10 @@ export default function Footer() {
             services accessible to every business.
           </p>
           <div className="flex mt-4 space-x-3">
-            <SocialIcon url="https://instagram.com"  style={{ height: 30, width: 30 }} />
-            <SocialIcon url="https://twitter.com"  style={{ height: 30, width: 30 }} />
-            <SocialIcon url="https://facebook.com"  style={{ height: 30, width: 30 }} />
-            <SocialIcon url="https://linkedin.com"  style={{ height: 30, width: 30 }} />
+            <SocialIcon url="https://instagram.com" style={{ height: 30, width: 30 }} />
+            <SocialIcon url="https://twitter.com" style={{ height: 30, width: 30 }} />
+            <SocialIcon url="https://facebook.com" style={{ height: 30, width: 30 }} />
+            <SocialIcon url="https://linkedin.com" style={{ height: 30, width: 30 }} />
           </div>
         </div>
 
@@ -56,10 +47,10 @@ export default function Footer() {
         <div>
           <h3 className="text-white font-semibold mb-4">Company</h3>
           <ul className="space-y-2 text-sm text-gray-300">
-            <li><a href="#">Home</a></li>
-            <li><a href="#">About Us</a></li>
-            <li><a href="#">Careers</a></li>
-            <li><a href="#">Contact Us</a></li>
+            <li><Link href="/">Home</Link></li>
+            <li><Link href="/about">About Us</Link></li>
+            <li><Link href="/contact">Contact Us</Link></li>
+            <li><Link href="/services">Our services</Link></li>
           </ul>
         </div>
 
@@ -74,12 +65,12 @@ export default function Footer() {
           </ul>
         </div>
 
-        {/* Services */}
+        {/* Dynamic Services List */}
         <div>
           <h3 className="text-white font-semibold mb-4">Services</h3>
           <ul className="space-y-2 text-sm text-gray-300">
             {services.map((s, i) => (
-              <li key={i}>{s}</li>
+              <li key={i}>{s.title}</li>
             ))}
           </ul>
         </div>

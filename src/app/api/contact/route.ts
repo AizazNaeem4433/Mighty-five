@@ -4,7 +4,7 @@ import nodemailer from 'nodemailer';
 export async function POST(req: Request) {
   // Validate required fields first
   try {
-    const { name, email, subject, message } = await req.json();
+    const { name, email, phone, message } = await req.json();
 
     if (!name || !email || !message) {
       return NextResponse.json(
@@ -13,7 +13,6 @@ export async function POST(req: Request) {
       );
     }
 
-    // Validate email format
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     if (!emailRegex.test(email)) {
       return NextResponse.json(
@@ -22,7 +21,6 @@ export async function POST(req: Request) {
       );
     }
 
-    // Check if email credentials are configured
     if (!process.env.EMAIL_USER || !process.env.EMAIL_PASS) {
       console.error('Email credentials not configured');
       return NextResponse.json(
@@ -31,7 +29,6 @@ export async function POST(req: Request) {
       );
     }
 
-    // Create transporter with more robust configuration
     const transporter = nodemailer.createTransport({
       service: 'gmail',
       host: 'smtp.gmail.com',
@@ -46,7 +43,6 @@ export async function POST(req: Request) {
       }
     });
 
-    // Verify connection configuration
     try {
       await transporter.verify();
     } catch (verifyError) {
@@ -61,24 +57,24 @@ export async function POST(req: Request) {
       from: `"Contact Form" <${process.env.EMAIL_USER}>`,
       replyTo: email,
       to: process.env.CONTACT_RECIPIENT || 'juttslacker@gmail.com',
-      subject: subject || `New message from ${name}`,
+      subject: phone || `New message from ${name}`,
       html: `
         <div style="font-family: Arial, sans-serif; line-height: 1.6;">
           <h2 style="color: #333;">New contact form submission</h2>
           <p><strong>From:</strong> ${name} (${email})</p>
-          ${subject ? `<p><strong>Subject:</strong> ${subject}</p>` : ''}
+          ${phone ? `<p><strong>phone:</strong> ${phone}</p>` : ''}
           <p><strong>Message:</strong></p>
           <div style="background: #f5f5f5; padding: 15px; border-radius: 5px; margin-top: 10px;">
             ${message.replace(/\n/g, '<br>')}
           </div>
           <p style="margin-top: 20px; color: #666; font-size: 0.9em;">
-            Sent from your website contact form
+            Email from MightyFive contact form.
+            <br>
           </p>
         </div>
       `,
     };
 
-    // Send email with timeout
     const sendPromise = transporter.sendMail(mailOptions);
     const timeoutPromise = new Promise((_, reject) => 
       setTimeout(() => reject(new Error('Email sending timeout')), 10000)
@@ -91,7 +87,7 @@ export async function POST(req: Request) {
       message: 'Your message has been sent successfully!' 
     });
 
-  } catch (error: any) {
+  } catch (error: any) {// eslint-disable-line
     console.error('Email sending error:', error);
     
     let errorMessage = 'Failed to send email';

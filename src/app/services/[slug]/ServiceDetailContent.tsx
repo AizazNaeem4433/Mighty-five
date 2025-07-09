@@ -19,67 +19,74 @@ export default function ServiceDetailContent({ service }: { service: Service }) 
   const processRef = useRef(null);
   const ctaRef = useRef(null);
 
+  // ✅ Only run animations once DOM is painted
   useEffect(() => {
-    gsap.from(bannerRef.current, { opacity: 0, y: 50, duration: 1, ease: 'power3.out' });
-    gsap.from(titleRef.current, { opacity: 0, y: 30, duration: 0.8, delay: 0.3, ease: 'back.out(1.7)' });
-    gsap.from(introRef.current, { opacity: 0, y: 20, duration: 0.8, delay: 0.5, ease: 'power2.out' });
+    const timeout = setTimeout(() => {
+      gsap.from(bannerRef.current, { opacity: 0, y: 50, duration: 1, ease: 'power3.out' });
+      gsap.from(titleRef.current, { opacity: 0, y: 30, duration: 0.8, delay: 0.3, ease: 'back.out(1.7)' });
+      gsap.from(introRef.current, { opacity: 0, y: 20, duration: 0.8, delay: 0.5, ease: 'power2.out' });
 
-    const sections = [
-      { ref: overviewRef, x: -50 },
-      { ref: servicesRef, x: 50 },
-      { ref: processRef, y: 50 },
-      { ref: ctaRef, y: 30 },
-    ];
+      const sections = [
+        { ref: overviewRef, x: -50 },
+        { ref: servicesRef, x: 50 },
+        { ref: processRef, y: 50 },
+        { ref: ctaRef, y: 30 },
+      ];
 
-    sections.forEach((section) => {
-      gsap.from(section.ref.current, {
-        opacity: 0,
-        x: section.x || 0,
-        y: section.y || 0,
-        duration: 0.8,
-        scrollTrigger: {
-          trigger: section.ref.current,
-          start: 'top 80%',
-          toggleActions: 'play none none none',
-        },
-        ease: 'power2.out',
+      sections.forEach((section) => {
+        gsap.from(section.ref.current, {
+          opacity: 0,
+          x: section.x || 0,
+          y: section.y || 0,
+          duration: 0.8,
+          scrollTrigger: {
+            trigger: section.ref.current,
+            start: 'top 80%',
+            toggleActions: 'play none none none',
+          },
+          ease: 'power2.out',
+        });
       });
-    });
 
-    gsap.utils.toArray('.service-card').forEach((card: any, i) => {
-      gsap.from(card, {
-        opacity: 0,
-        y: 30,
-        duration: 0.5,
-        delay: i * 0.1,
-        scrollTrigger: {
-          trigger: card,
-          start: 'top 90%',
-          toggleActions: 'play none none none',
-        },
-        ease: 'back.out(1.2)',
+      gsap.utils.toArray('.service-card').forEach((card: any, i) => { // eslint-disable-line
+        gsap.from(card, {
+          opacity: 0,
+          y: 30,
+          duration: 0.5,
+          delay: i * 0.1,
+          scrollTrigger: {
+            trigger: card,
+            start: 'top 90%',
+            toggleActions: 'play none none none',
+          },
+          ease: 'back.out(1.2)',
+        });
       });
-    });
 
-    gsap.utils.toArray('.process-step').forEach((step: any, i) => {
-      gsap.from(step, {
-        opacity: 0,
-        scale: 0.8,
-        duration: 0.6,
-        delay: i * 0.15,
-        scrollTrigger: {
-          trigger: step,
-          start: 'top 85%',
-          toggleActions: 'play none none none',
-        },
-        ease: 'elastic.out(1, 0.5)',
+      gsap.utils.toArray('.process-step').forEach((step: any, i) => {// eslint-disable-line
+        gsap.from(step, {
+          opacity: 0,
+          scale: 0.8,
+          duration: 0.6,
+          delay: i * 0.15,
+          scrollTrigger: {
+            trigger: step,
+            start: 'top 85%',
+            toggleActions: 'play none none none',
+          },
+          ease: 'elastic.out(1, 0.5)',
+        });
       });
-    });
+    }, 0);
 
     return () => {
+      clearTimeout(timeout);
       ScrollTrigger.getAll().forEach((trigger) => trigger.kill());
     };
   }, []);
+
+  // ✅ Optional: prevent rendering if data is not loaded
+  if (!service) return null;
 
   return (
     <div className="bg-white">
@@ -185,7 +192,7 @@ export default function ServiceDetailContent({ service }: { service: Service }) 
         </section>
 
         {/* Tech Stack */}
-<TechStack tools={service.tools} />
+        <TechStack tools={service.tools} />
 
         {/* CTA */}
         <section ref={ctaRef} className="text-center py-10">

@@ -1,90 +1,16 @@
 'use client';
 
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useRef } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
 import ShapeSvg from '../components/ShapeSvg';
 import { SocialIcon } from 'react-social-icons';
-import gsap from 'gsap';
-import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import toast from 'react-hot-toast';
+import { motion } from 'framer-motion';
 
 export default function ContactPage() {
   const [loading, setLoading] = useState(false);
-  const bannerRef = useRef<HTMLDivElement>(null);
-  const contactSectionRef = useRef<HTMLDivElement>(null);
   const formRef = useRef<HTMLFormElement>(null);
-  const infoRef = useRef<HTMLUListElement>(null);
-  const socialIconsRef = useRef<HTMLDivElement>(null);
-
-  useEffect(() => {
-    gsap.registerPlugin(ScrollTrigger);
-
-    gsap.from(bannerRef.current, {
-      opacity: 0,
-      y: 50,
-      duration: 1,
-      ease: 'power3.out',
-    });
-
-    gsap.from(contactSectionRef.current, {
-      opacity: 0,
-      y: 80,
-      duration: 1,
-      scrollTrigger: {
-        trigger: contactSectionRef.current,
-        start: 'top 80%',
-        toggleActions: 'play none none none',
-      },
-    });
-
-    if (formRef.current) {
-      const inputs = formRef.current.querySelectorAll('input, textarea');
-      gsap.from(inputs, {
-        opacity: 0,
-        y: 20,
-        stagger: 0.1,
-        duration: 0.5,
-        scrollTrigger: {
-          trigger: formRef.current,
-          start: 'top 70%',
-          toggleActions: 'play none none none',
-        },
-      });
-    }
-
-    if (infoRef.current) {
-      const items = infoRef.current.querySelectorAll('li');
-      gsap.from(items, {
-        opacity: 0,
-        x: -20,
-        stagger: 0.1,
-        duration: 0.5,
-        scrollTrigger: {
-          trigger: infoRef.current,
-          start: 'top 70%',
-          toggleActions: 'play none none none',
-        },
-      });
-    }
-
-    if (socialIconsRef.current) {
-      const icons = socialIconsRef.current.querySelectorAll('a');
-      gsap.from(icons, {
-        opacity: 0,
-        scale: 0.5,
-        y: 20,
-        stagger: 0.1,
-        duration: 0.5,
-        ease: 'back.out(1.7)',
-        scrollTrigger: {
-          trigger: socialIconsRef.current,
-          start: 'top 80%',
-          toggleActions: 'play none none none',
-        },
-      });
-    }
-  }, []);
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -106,20 +32,8 @@ export default function ContactPage() {
 
       toast.success(responseData.message || 'Message sent successfully!');
       formRef.current?.reset();
-
-      gsap.fromTo(
-        '.submit',
-        { backgroundColor: '#4f46e5' },
-        { backgroundColor: '#10b981', duration: 0.5, yoyo: true, repeat: 1 }
-      );
-    } catch (error: any) {
+    } catch (error: any) {// eslint-disable-line
       toast.error(error.message || 'Something went wrong. Please try again.');
-
-      gsap.fromTo(
-        '.submit',
-        { x: 0 },
-        { x: [-5, 5, -5, 5, 0], duration: 0.5, ease: 'power1.inOut' }
-      );
     } finally {
       setLoading(false);
     }
@@ -127,8 +41,8 @@ export default function ContactPage() {
 
   return (
     <main className="min-h-screen bg-white text-gray-800 overflow-hidden">
-      {/* Responsive Banner Image */}
-      <div ref={bannerRef} className="relative w-full h-[300px] md:h-[400px]">
+
+      <div className="relative w-full h-[300px] md:h-[400px]">
         <Image
           src="/26985665_v873-bb-14.jpg"
           alt="Contact Banner"
@@ -143,56 +57,118 @@ export default function ContactPage() {
             <span className="mx-1">{'>'}</span>
             <span>Contact Us</span>
           </div>
-          <h1 className="text-white text-4xl md:text-5xl font-extrabold">Contact Us</h1>
+          <motion.h1
+            initial={{ opacity: 0, y: 30 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8, delay: 0.4 }}
+            className="text-white text-4xl md:text-5xl font-extrabold"
+          >
+            Contact Us
+          </motion.h1>
         </div>
       </div>
 
       {/* Contact Section */}
-      <section ref={contactSectionRef} className="max-w-7xl mx-auto px-6 py-20 grid grid-cols-1 md:grid-cols-2 gap-12">
-        {/* Left Info */}
-        <div className="relative bg-gray-50 p-8 rounded-xl shadow-xl overflow-hidden">
+      <motion.section
+        initial={{ opacity: 0, y: 50 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true }}
+        transition={{ duration: 0.8 }}
+        className="max-w-7xl mx-auto px-6 py-20 grid grid-cols-1 md:grid-cols-2 gap-12"
+      >
+        
+        <motion.div
+          initial={{ opacity: 0, x: -40 }}
+          whileInView={{ opacity: 1, x: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.6 }}
+          className="relative bg-gray-50 p-8 rounded-xl shadow-xl overflow-hidden"
+        >
           <div className="relative z-10">
             <h2 className="text-3xl font-bold text-gray-800 mb-[-4px]">Get in touch</h2>
             <div className="-mt-2"><ShapeSvg /></div>
-            <ul ref={infoRef} className="space-y-4 text-gray-700 mt-4">
-              <li><strong>Address:</strong> Suite #401, Gulberg Business Park, Islamabad</li>
-              <li><strong>Email:</strong> info@mightyfive.com</li>
-              <li><strong>Phone:</strong> +92 300 1234567</li>
-              <li><strong>Business Hours:</strong> Mon - Fri: 9:00 AM – 6:00 PM</li>
+            <ul className="space-y-4 text-gray-700 mt-4">
+              {[
+                { label: 'Address', value: 'Suite #401, Gulberg Business Park, Islamabad' },
+                { label: 'Email', value: 'info@mightyfive.com' },
+                { label: 'Phone', value: '+92 300 1234567' },
+                { label: 'Business Hours', value: 'Mon - Fri: 9:00 AM – 6:00 PM' },
+              ].map((item, index) => (
+                <motion.li
+                  key={index}
+                  initial={{ opacity: 0, x: -20 }}
+                  whileInView={{ opacity: 1, x: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ duration: 0.4, delay: index * 0.1 }}
+                >
+                  <strong>{item.label}:</strong> {item.value}
+                </motion.li>
+              ))}
             </ul>
-            <div ref={socialIconsRef} className="flex gap-3 mt-6">
+
+            <motion.div
+              className="flex gap-3 mt-6"
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ delay: 0.4 }}
+            >
               <SocialIcon url="https://facebook.com/mightyfive" bgColor="#1877F2" fgColor="#fff" style={{ height: 40, width: 40 }} />
               <SocialIcon url="https://x.com/mightyfive" style={{ height: 40, width: 40 }} />
               <SocialIcon url="https://instagram.com/mightyfive" style={{ height: 40, width: 40 }} />
               <SocialIcon url="https://linkedin.com/company/mightyfive" style={{ height: 40, width: 40 }} />
-            </div>
+            </motion.div>
           </div>
-        </div>
+        </motion.div>
 
-        {/* Right Form */}
-        <form ref={formRef} onSubmit={handleSubmit} className="form">
+        <motion.form
+          ref={formRef}
+          onSubmit={handleSubmit}
+          className="form"
+          initial={{ opacity: 0, y: 40 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.7 }}
+        >
           <div className="title">Contact Us</div>
-          <p className="message">We'd love to hear from you.</p>
+          <p className="message">We&apos;d love to hear from you.</p>
           <div className="flex flex-col gap-4">
-            <label className="relative">
-              <input name="name" type="text" className="input" placeholder=" " required />
-              <span>Your Name *</span>
-            </label>
-            <label className="relative">
-              <input name="email" type="email" className="input" placeholder=" " required />
-              <span>Email Address *</span>
-            </label>
-            <label className="relative">
-              <input name="subject" type="text" className="input" placeholder=" " />
-              <span>Subject</span>
-            </label>
-            <label className="relative">
+            {[
+              { name: 'name', type: 'text', label: 'Your Name *', required: true },
+              { name: 'email', type: 'email', label: 'Email Address *', required: true },
+              { name: 'phone', type: 'numbers', label: 'Phone Number*', required: true },
+            ].map((field, index) => (
+              <motion.label
+                key={index}
+                className="relative"
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ delay: index * 0.1 }}
+              >
+                <input name={field.name} type={field.type} className="input" placeholder=" " required={field.required} />
+                <span>{field.label}</span>
+              </motion.label>
+            ))}
+            <motion.label
+              className="relative"
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ delay: 0.3 }}
+            >
               <textarea name="message" className="input" placeholder=" " required rows={4}></textarea>
               <span>Message *</span>
-            </label>
+            </motion.label>
           </div>
 
-          <button type="submit" disabled={loading} className="submit opacity-100 mt-4">
+          <motion.button
+            type="submit"
+            disabled={loading}
+            className="submit opacity-100 mt-4"
+            whileTap={{ scale: 0.95 }}
+            whileHover={{ scale: 1.02 }}
+          >
             {loading ? (
               <span className="flex items-center justify-center">
                 <svg className="animate-spin -ml-1 mr-3 h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
@@ -204,9 +180,9 @@ export default function ContactPage() {
             ) : (
               'Send Message'
             )}
-          </button>
-        </form>
-      </section>
+          </motion.button>
+        </motion.form>
+      </motion.section>
     </main>
   );
 }

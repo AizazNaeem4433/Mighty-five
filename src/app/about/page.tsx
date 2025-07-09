@@ -128,7 +128,7 @@ export default function AboutPage() {
               innovation, and excellence — we help brands elevate their digital presence and drive results
               through thoughtful strategy and exceptional execution.
               <br /><br />
-              We are not just an agency — we’re your technology partner. Whether it's a startup or a large
+              We are not just an agency — we&apos;re your technology partner. Whether it&apos;s a startup or a large
               enterprise, we blend strategy, creativity, and code to turn ideas into scalable products that
               users love and businesses rely on.
             </p>
@@ -258,7 +258,7 @@ export default function AboutPage() {
                 { name: 'Musa Yousaf', role: 'Product Lead, ByteX', text: 'Great service and outstanding results!', image: '/—Pngtree—young indian man_13229320.png' },
               ].map((t, i) => (
                 <div key={i} className="bg-white flex-shrink-0 w-full md:w-1/3 rounded-xl shadow-lg p-6">
-                  <p className="text-gray-700 italic mb-4">"{t.text}"</p>
+                  <p className="text-gray-700 italic mb-4">&apos;{t.text}&apos;</p>
                   <div className="flex items-center">
                     <div className="w-12 h-12 rounded-full overflow-hidden mr-4">
                       <Image src={t.image} alt={t.name} width={48} height={48} className="object-cover" />

@@ -82,14 +82,14 @@ export default function WhyPartnerSection() {
         </h2>
         <div ref={paraRef}>
           <p className="text-gray-600 text-lg mb-6 leading-relaxed">
-            We're all about making your digital ideas come true in the most awesome way possible. We
+            We&apos;re all about making your digital ideas come true in the most awesome way possible. We
             believe in keeping things straightforward, effective, and totally in tune with what you
             need.
           </p>
 
           <p className="text-gray-600 text-lg mb-6 leading-relaxed">
-            Choosing <strong>Mighty Five</strong> means choosing a partner who’s invested in your
-            success every step of the way. Let's join forces and create something extraordinary!
+            Choosing <strong>Mighty Five</strong> means choosing a partner who&apos;s invested in your
+            success every step of the way. Let&apos;s join forces and create something extraordinary!
           </p>
         </div>
 

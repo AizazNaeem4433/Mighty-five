@@ -23,14 +23,12 @@ export default function HeroSVG() {
 
     const length = path.getTotalLength();
 
-    // Initial styles
     gsap.set([path, star, subtitle, features], { opacity: 0 });
     gsap.set(path, {
       strokeDasharray: length,
       strokeDashoffset: length
     });
 
-    // GSAP Timeline (no heading animation here)
     const tl = gsap.timeline({ defaults: { ease: 'power2.out' } });
 
     tl.to(path, {
@@ -74,19 +72,23 @@ export default function HeroSVG() {
 
   return (
     <div className="min-h-screen flex flex-col bg-white">
-      {/* Main Hero Section */}
       <section className="flex-1 flex flex-col items-center justify-center px-4 py-6 text-center gap-0">
-        {/* Heading with Framer Motion */}
         <motion.h1
           initial={{ opacity: 0, y: 10 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 1.2, ease: 'easeOut' }}
           className="text-6xl md:text-7xl font-extrabold text-gray-900 mb-[-6px]"
         >
-          Mighty <span className="text-transparent bg-clip-text bg-gradient-to-r from-green-500 to-orange-400">Five</span> Agency
+          Mighty{' '}
+          <span className="relative inline-block text-transparent bg-clip-text bg-gradient-to-r from-[#5853e8] to-black">
+            Five
+            <span className="absolute top-0 left-0 w-full h-full overflow-hidden pointer-events-none">
+              <span className="block w-1/3 h-full bg-white opacity-30 blur-sm transform rotate-12 animate-shine" />
+            </span>
+          </span>{' '}
+          Agency
         </motion.h1>
 
-        {/* SVG with path + star, animated with GSAP only (no Framer motion) */}
         <motion.svg
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
@@ -99,8 +101,8 @@ export default function HeroSVG() {
         >
           <defs>
             <linearGradient id="grad" x1="0%" y1="0%" x2="100%" y2="0%">
-              <stop offset="0%" stopColor="#10b981" />
-              <stop offset="100%" stopColor="#f97316" />
+              <stop offset="0%" stopColor="#5853e8" />
+              <stop offset="100%" stopColor="#000000" />
             </linearGradient>
           </defs>
 
@@ -120,7 +122,6 @@ export default function HeroSVG() {
           />
         </motion.svg>
 
-        {/* Subtitle */}
         <p
           ref={subtitleRef}
           className="text-lg md:text-xl text-gray-600 max-w-xl mt-[-4px] opacity-0"
@@ -129,15 +130,15 @@ export default function HeroSVG() {
         </p>
       </section>
 
-      {/* Features Section - Horizontal Row */}
-      <section 
-        ref={featuresRef} 
+      <section
+        ref={featuresRef}
         className="w-full py-12 opacity-0 translate-y-10"
       >
         <div className="container mx-auto px-4">
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+            {/* Feature 1 */}
             <div className="text-center p-6 flex flex-col items-center">
-              <div className="w-12 h-12 mb-3 text-orange-500">
+              <div className="w-12 h-12 mb-3 text-indigo-700">
                 <svg viewBox="0 0 400 400" xmlns="http://www.w3.org/2000/svg">
                   <path d="M102.125 172.839C54.7551 235.791 48.0015 293.96 48.0015 358.802" stroke="currentColor" strokeWidth="16" strokeLinecap="round" strokeLinejoin="round"/>
                   <path d="M102.127 172.839C112.108 211.439 135.434 277.795 135.434 315.781" stroke="currentColor" strokeWidth="16" strokeLinecap="round" strokeLinejoin="round"/>
@@ -155,9 +156,10 @@ export default function HeroSVG() {
                 Turning challenges into opportunities with cutting-edge solutions.
               </p>
             </div>
-            
+
+            {/* Feature 2 */}
             <div className="text-center p-6 flex flex-col items-center">
-              <div className="w-12 h-12 mb-3 text-orange-500">
+              <div className="w-12 h-12 mb-3 text-indigo-700">
                 <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
                   <path d="M12,14.86l-1.91,1.91L8.18,14.86V3.41a1.91,1.91,0,0,1,3.82,0Z" fill="none" stroke="currentColor" strokeMiterlimit="10" strokeWidth="1.91"/>
                   <path d="M12,7.23h6.68v9.54h1a2.87,2.87,0,0,1,0,5.73H1.5V7.23H8.18" fill="none" stroke="currentColor" strokeMiterlimit="10" strokeWidth="1.91"/>
@@ -170,9 +172,10 @@ export default function HeroSVG() {
                 Excellence in execution, from the first draft to the final product.
               </p>
             </div>
-            
+
+            {/* Feature 3 */}
             <div className="text-center p-6 flex flex-col items-center">
-              <div className="w-12 h-12 mb-3 text-orange-500">
+              <div className="w-12 h-12 mb-3 text-indigo-700">
                 <svg viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg">
                   <path d="M6,21V20H4v1a7,7,0,0,0,7,7h3V26H11A5,5,0,0,1,6,21Z" fill="currentColor"/>
                   <path d="M24,11v1h2V11a7,7,0,0,0-7-7H16V6h3A5,5,0,0,1,24,11Z" fill="currentColor"/>

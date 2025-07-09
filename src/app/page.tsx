@@ -8,11 +8,9 @@ import { services } from '@/app/lib/data/services';
 
 export default function Home() {
   return (
-    <main className="bg-white">
+    <main>
       <HeroSVG />
-
-      {/* Service Cards Section */}
-      <section className="py-20">
+      <section className="py-5">
         <h2 className="text-center text-4xl font-extrabold mb-14 text-gray-900">
           Our Services
         </h2>

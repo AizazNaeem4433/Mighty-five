@@ -61,7 +61,7 @@ export default function Navbar() {
         <div className="flex items-center justify-between h-16">
           <Link href="/" className="text-xl font-bold text-gray-900">
             Mighty{' '}
-            <span className="text-transparent bg-clip-text bg-gradient-to-r from-green-500 to-orange-400">
+            <span className="text-transparent bg-clip-text bg-gradient-to-r from-indigo-500 to-black">
               Five
             </span>
           </Link>

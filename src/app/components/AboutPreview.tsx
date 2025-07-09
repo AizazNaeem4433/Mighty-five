@@ -145,7 +145,7 @@ export default function AboutPage() {
           {/* ✅ Read More Button */}
           <div ref={readMoreRef}>
             <Link href="/about">
-              <button className="mt-6 inline-block bg-gradient-to-r from-green-500 to-orange-400 text-white font-semibold py-2 px-6 rounded-full shadow-md hover:shadow-lg transition duration-300 hover:scale-105">
+              <button className="mt-6 inline-block  bg-gradient-to-r from-[#5850EC] to-black text-white font-semibold py-2 px-6 rounded-full shadow-md hover:shadow-lg transition duration-300 hover:scale-105">
                 Read More
               </button>
             </Link>

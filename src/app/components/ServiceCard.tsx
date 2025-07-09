@@ -33,7 +33,7 @@ export default function ServiceCard({
   index,
   description,
 }: ServiceCardProps) {
-  const icon = iconMap[slug] || <FaCode className="text-gray-600 text-3xl" />;
+  const icon = iconMap[slug] || <FaCode className="text-gray-400 text-3xl" />;
   const number = String(index + 1).padStart(2, '0');
 
   return (
